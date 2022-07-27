@@ -15,12 +15,35 @@ namespace Prototype03 {
          products.RemoveAll( ProductTest );
          foreach ( Product pro in products )
             Console.WriteLine( pro );
+         Console.WriteLine();
+
+         // action
+         products.ForEach( UpdatePrice );
+         foreach ( Product pro in products )
+            Console.WriteLine( pro );
+         Console.WriteLine();
+
+         products.ForEach( p => p.Price += p.Price * .1 );
+         products.ForEach( p => Console.WriteLine( p ) );
+         Console.WriteLine();
+
+         Action<Product> action01 = UpdatePrice;
+         Action<Product> action02 = p => p.Price += p.Price * .1;
+
+         products.ForEach( action01 );
+         products.ForEach( action02 );
+         products.ForEach( p => Console.WriteLine( p ) );
 
       }
 
       static bool ProductTest( Product _product ) {
 
          return ( _product.Price >= 100 );
+
+      }
+      static void UpdatePrice( Product _product ) {
+
+         _product.Price += _product.Price * .1;
 
       }
    }
